@@ -7,7 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component("lendingClubDBHelper")
 public class LendingClubDBHelper {
+
+    @Value("${db.connection.password}")
+    private String password;
+
+    @Value("${db.connection.username}")
+    private String username;
+
+    @Value("${db.connection.url}")
+    private String url;
 
     static {
 	try {
@@ -17,30 +30,29 @@ public class LendingClubDBHelper {
 	}
     }
 
-    public static Connection getConnection() throws SQLException {
-	return DriverManager.getConnection(LendingClubDBConfig.URL.getValue(), LendingClubDBConfig.USERNAME.getValue(),
-		LendingClubDBConfig.PASSWORD.getValue());
+    public Connection getConnection() throws SQLException {
+	return DriverManager.getConnection(url, username, password);
     }
 
-    public static void closeConnection(Connection con) throws SQLException {
+    public void closeConnection(Connection con) throws SQLException {
 	if (con != null) {
 	    con.close();
 	}
     }
 
-    public static void closePreparedStatement(PreparedStatement stmt) throws SQLException {
+    public void closePreparedStatement(PreparedStatement stmt) throws SQLException {
 	if (stmt != null) {
 	    stmt.close();
 	}
     }
 
-    public static void closeStatement(Statement stmt) throws SQLException {
+    public void closeStatement(Statement stmt) throws SQLException {
 	if (stmt != null) {
 	    stmt.close();
 	}
     }
 
-    public static void closeResultSet(ResultSet rs) throws SQLException {
+    public void closeResultSet(ResultSet rs) throws SQLException {
 	if (rs != null) {
 	    rs.close();
 	}

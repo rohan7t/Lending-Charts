@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lc.helper.LendingClubDBHelper;
@@ -18,11 +19,8 @@ import com.lc.model.MonthlyLoanVolume;
 @Component("lendingClubRepository")
 public class LendingClubRepository {
 
-//    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-//    static final String DB_URL = "jdbc:mysql://localhost:3306/lclub?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=EST";
-//
-//    static final String USER = "lcadmin";
-//    static final String PASS = "lendingcharts";
+    @Autowired
+    LendingClubDBHelper lendingClubDBHelper;
 
     private static final String FETCH_AGGREGATED_TOTALS_SQL = "SELECT SUM(l.`loan_amnt`) AS amount_applied, SUM(l.`funded_amnt`) AS amount_funded, SUM(l.`funded_amnt_inv`) AS amount_inv_comm FROM loan l WHERE YEAR(STR_TO_DATE(CONCAT(l.`issue_d`, '-01'), '%b-%Y-%d'))=?";
     private static final String FETCH_LOANS_BY_CREDIT_GRADE_SQL = "SELECT l.`grade` as grade, MONTH(STR_TO_DATE(CONCAT(l.`issue_d`, '-01'), '%b-%Y-%d')) as month_no, AVG(l.`loan_amnt`) as aver_amt FROM loan l WHERE YEAR(STR_TO_DATE(CONCAT(l.`issue_d`, '-01'), '%b-%Y-%d'))=? GROUP BY MONTH(STR_TO_DATE(CONCAT(l.`issue_d`, '-01'), '%b-%Y-%d')), l.`grade`;";
@@ -38,7 +36,7 @@ public class LendingClubRepository {
 	BigDecimal amountCommitedByInvestors = new BigDecimal(0);
 	try {
 	    System.out.println("Connecting to database...");
-	    con = LendingClubDBHelper.getConnection();
+	    con = lendingClubDBHelper.getConnection();
 	    if (con == null) {
 		throw new SQLException();
 	    }
@@ -63,9 +61,9 @@ public class LendingClubRepository {
 	    throw e;
 	} finally {
 	    try {
-		LendingClubDBHelper.closeResultSet(rs);
-		LendingClubDBHelper.closePreparedStatement(stmt);
-		LendingClubDBHelper.closeConnection(con);
+		lendingClubDBHelper.closeResultSet(rs);
+		lendingClubDBHelper.closePreparedStatement(stmt);
+		lendingClubDBHelper.closeConnection(con);
 	    } catch (SQLException e) {
 		e.printStackTrace();
 		throw e;
@@ -81,7 +79,7 @@ public class LendingClubRepository {
 	LoansByCreditGrade loansByCreditGrade = null;
 	try {
 	    System.out.println("Connecting to database...");
-	    con = LendingClubDBHelper.getConnection();
+	    con = lendingClubDBHelper.getConnection();
 	    if (con == null) {
 		throw new SQLException();
 	    }
@@ -97,9 +95,9 @@ public class LendingClubRepository {
 	    throw e;
 	} finally {
 	    try {
-		LendingClubDBHelper.closeResultSet(rs);
-		LendingClubDBHelper.closePreparedStatement(stmt);
-		LendingClubDBHelper.closeConnection(con);
+		lendingClubDBHelper.closeResultSet(rs);
+		lendingClubDBHelper.closePreparedStatement(stmt);
+		lendingClubDBHelper.closeConnection(con);
 	    } catch (SQLException e) {
 		e.printStackTrace();
 		throw e;
@@ -115,7 +113,7 @@ public class LendingClubRepository {
 	MonthlyLoanVolume monthlyLoanVolume = null;
 	try {
 	    System.out.println("Connecting to database...");
-	    con = LendingClubDBHelper.getConnection();
+	    con = lendingClubDBHelper.getConnection();
 	    if (con == null) {
 		throw new SQLException();
 	    }
@@ -131,9 +129,9 @@ public class LendingClubRepository {
 	    throw e;
 	} finally {
 	    try {
-		LendingClubDBHelper.closeResultSet(rs);
-		LendingClubDBHelper.closePreparedStatement(stmt);
-		LendingClubDBHelper.closeConnection(con);
+		lendingClubDBHelper.closeResultSet(rs);
+		lendingClubDBHelper.closePreparedStatement(stmt);
+		lendingClubDBHelper.closeConnection(con);
 	    } catch (SQLException e) {
 		e.printStackTrace();
 		throw e;
@@ -149,7 +147,7 @@ public class LendingClubRepository {
 	ArrayList<Integer> years = new ArrayList<Integer>();
 	try {
 	    System.out.println("Connecting to database...");
-	    con = LendingClubDBHelper.getConnection();
+	    con = lendingClubDBHelper.getConnection();
 	    if (con == null) {
 		throw new SQLException();
 	    }
@@ -164,9 +162,9 @@ public class LendingClubRepository {
 	    throw e;
 	} finally {
 	    try {
-		LendingClubDBHelper.closeResultSet(rs);
-		LendingClubDBHelper.closeStatement(stmt);
-		LendingClubDBHelper.closeConnection(con);
+		lendingClubDBHelper.closeResultSet(rs);
+		lendingClubDBHelper.closeStatement(stmt);
+		lendingClubDBHelper.closeConnection(con);
 	    } catch (SQLException e) {
 		e.printStackTrace();
 		throw e;
