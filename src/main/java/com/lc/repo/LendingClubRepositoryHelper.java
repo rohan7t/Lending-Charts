@@ -6,13 +6,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.lc.model.LoansByCreditGrade;
 import com.lc.model.MonthValue;
 import com.lc.model.MonthlyLoanVolume;
 
 public class LendingClubRepositoryHelper {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LendingClubRepositoryHelper.class);
+
     public static LoansByCreditGrade populateLoansByCreditGrade(ResultSet rs) throws SQLException {
+	LOGGER.info("Entering LendingClubRepositoryHelper.populateLoansByCreditGrade()");
 	HashMap<String, HashMap<Integer, BigDecimal>> gradeMap = new HashMap<String, HashMap<Integer, BigDecimal>>();
 	while (rs.next()) {
 	    String grade = rs.getString("grade");
@@ -26,24 +32,29 @@ public class LendingClubRepositoryHelper {
 		gradeMap.put(grade, innerMap);
 	    }
 	}
+	LOGGER.info("Exiting LendingClubRepositoryHelper.populateLoansByCreditGrade()");
 	return new LoansByCreditGrade(gradeMap);
     }
 
     public static MonthlyLoanVolume populateMonthlyLoanVolume(ResultSet rs) throws SQLException {
+	LOGGER.info("Entering LendingClubRepositoryHelper.populateMonthlyLoanVolume()");
 	ArrayList<MonthValue> monthlyLoanVolumeArray = new ArrayList<MonthValue>();
 	while (rs.next()) {
 	    String month = rs.getString("month_no");
 	    BigDecimal averageAmount = rs.getBigDecimal("loan_volume");
 	    monthlyLoanVolumeArray.add(new MonthValue(month, averageAmount));
 	}
+	LOGGER.info("Exiting LendingClubRepositoryHelper.populateMonthlyLoanVolume()");
 	return new MonthlyLoanVolume(monthlyLoanVolumeArray);
     }
 
     public static ArrayList<Integer> populateAllYears(ResultSet rs) throws SQLException {
+	LOGGER.info("Entering LendingClubRepositoryHelper.populateAllYears()");
 	ArrayList<Integer> years = new ArrayList<Integer>();
 	while (rs.next()) {
 	    years.add(rs.getInt("year_value"));
 	}
+	LOGGER.info("Exiting LendingClubRepositoryHelper.populateAllYears()");
 	return years;
     }
 }

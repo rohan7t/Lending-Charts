@@ -17,7 +17,7 @@ import com.lc.model.YearAggregate;
 @RestController
 public class LendingClubController {
 
-    Logger logger = LoggerFactory.getLogger(LendingClubController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LendingClubController.class);
 
     @Autowired
     LendingClubHandler lendingClubHandler;
@@ -28,10 +28,10 @@ public class LendingClubController {
     @ResponseBody
     public ArrayList<Integer> loadYears() {
 	try {
-	    logger.info("Calling handler");
+	    LOGGER.info("Calling handler");
 	    ArrayList<Integer> response = lendingClubHandler.fetchAllYears();
-	    logger.info("Recieved data from handler");
-	    logger.info("RESPONSE data :" + response);
+	    LOGGER.info("Recieved data from handler");
+	    LOGGER.info("RESPONSE data :" + response);
 	    return response;
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -45,10 +45,10 @@ public class LendingClubController {
     public YearAggregate fetchData(@PathVariable int year) {
 
 	try {
-	    logger.info("Calling handler");
+	    LOGGER.info("Calling handler");
 	    YearAggregate response = lendingClubHandler.fetchDataForYear(year);
-	    logger.info("Recieved data from handler");
-	    logger.info("RESPONSE data :" + response);
+	    LOGGER.info("Recieved data from handler");
+	    LOGGER.info("RESPONSE data :" + response);
 	    return response;
 	} catch (SQLException e) {
 	    e.printStackTrace();

@@ -3,6 +3,8 @@ package com.lc.handler;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,8 @@ import com.lc.repo.LendingClubRepository;
 
 @Component("lendingClubHandler")
 public class LendingClubHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LendingClubHandler.class);
 
     @Autowired
     LendingClubRepository lendingClubRepository;

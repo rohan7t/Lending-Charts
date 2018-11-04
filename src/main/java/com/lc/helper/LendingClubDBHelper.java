@@ -7,11 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component("lendingClubDBHelper")
 public class LendingClubDBHelper {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LendingClubDBHelper.class);
 
     @Value("${db.connection.password}")
     private String password;
@@ -31,11 +35,13 @@ public class LendingClubDBHelper {
     }
 
     public Connection getConnection() throws SQLException {
+	LOGGER.info("Connecting to database...");
 	return DriverManager.getConnection(url, username, password);
     }
 
     public void closeConnection(Connection con) throws SQLException {
 	if (con != null) {
+	    LOGGER.info("Closing connection to database...");
 	    con.close();
 	}
     }

@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,8 @@ import com.lc.model.MonthlyLoanVolume;
 @Component("lendingClubRepository")
 public class LendingClubRepository {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LendingClubRepository.class);
+
     @Autowired
     LendingClubDBHelper lendingClubDBHelper;
 
@@ -28,6 +32,7 @@ public class LendingClubRepository {
     private static final String FETCH_ALL_YEARS_SQL = "SELECT DISTINCT YEAR(STR_TO_DATE(CONCAT(l.`issue_d`, '-01'), '%b-%Y-%d')) AS year_value from loan l;";
 
     public AggregatedTotals fetchAggregatedTotals(int year) throws SQLException {
+	LOGGER.info(String.format("Entering LendingClubRepository fetchAggregatedTotals for %s", year));
 	Connection con = null;
 	PreparedStatement stmt = null;
 	ResultSet rs = null;
@@ -35,12 +40,11 @@ public class LendingClubRepository {
 	BigDecimal amountFunded = new BigDecimal(0);
 	BigDecimal amountCommitedByInvestors = new BigDecimal(0);
 	try {
-	    System.out.println("Connecting to database...");
 	    con = lendingClubDBHelper.getConnection();
 	    if (con == null) {
 		throw new SQLException();
 	    }
-	    System.out.println("Creating statement...");
+	    LOGGER.info("Creating statement...");
 	    stmt = con.prepareStatement(FETCH_AGGREGATED_TOTALS_SQL);
 	    stmt.setInt(1, year);
 	    rs = stmt.executeQuery();
@@ -50,11 +54,6 @@ public class LendingClubRepository {
 		amountApplied = rs.getBigDecimal("amount_applied");
 		amountFunded = rs.getBigDecimal("amount_funded");
 		amountCommitedByInvestors = rs.getBigDecimal("amount_inv_comm");
-
-		// Display values
-		System.out.println("amountFunded: " + amountApplied);
-		System.out.println("amountFunded: " + amountFunded);
-		System.out.println("amountCommitedByInvestors: " + amountCommitedByInvestors);
 	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
@@ -69,6 +68,7 @@ public class LendingClubRepository {
 		throw e;
 	    }
 	}
+
 	return new AggregatedTotals(amountApplied, amountFunded, amountCommitedByInvestors);
     }
 
@@ -78,12 +78,11 @@ public class LendingClubRepository {
 	ResultSet rs = null;
 	LoansByCreditGrade loansByCreditGrade = null;
 	try {
-	    System.out.println("Connecting to database...");
 	    con = lendingClubDBHelper.getConnection();
 	    if (con == null) {
 		throw new SQLException();
 	    }
-	    System.out.println("Creating statement...");
+	    LOGGER.info("Creating statement...");
 	    stmt = con.prepareStatement(FETCH_LOANS_BY_CREDIT_GRADE_SQL);
 	    stmt.setInt(1, year);
 	    rs = stmt.executeQuery();
@@ -112,12 +111,11 @@ public class LendingClubRepository {
 	ResultSet rs = null;
 	MonthlyLoanVolume monthlyLoanVolume = null;
 	try {
-	    System.out.println("Connecting to database...");
 	    con = lendingClubDBHelper.getConnection();
 	    if (con == null) {
 		throw new SQLException();
 	    }
-	    System.out.println("Creating statement...");
+	    LOGGER.info("Creating statement...");
 	    stmt = con.prepareStatement(FETCH_MONHTLY_LOAN_VOLUME_SQL);
 	    stmt.setInt(1, year);
 	    rs = stmt.executeQuery();
@@ -146,12 +144,11 @@ public class LendingClubRepository {
 	ResultSet rs = null;
 	ArrayList<Integer> years = new ArrayList<Integer>();
 	try {
-	    System.out.println("Connecting to database...");
 	    con = lendingClubDBHelper.getConnection();
 	    if (con == null) {
 		throw new SQLException();
 	    }
-	    System.out.println("Creating statement...");
+	    LOGGER.info("Creating statement...");
 	    stmt = con.createStatement();
 	    rs = stmt.executeQuery(FETCH_ALL_YEARS_SQL);
 
