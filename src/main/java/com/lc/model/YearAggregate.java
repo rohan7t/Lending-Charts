@@ -47,4 +47,10 @@ public class YearAggregate {
 	this.year = year;
     }
 
+    @Override
+    public String toString() {
+	return "YearAggregate [year=" + year + ", aggregateTotals=" + aggregateTotals + ", loansByCreditGrade="
+		+ loansByCreditGrade + ", monthlyLoanVolume=" + monthlyLoanVolume + "]";
+    }
+
 }

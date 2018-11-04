@@ -3,6 +3,8 @@ package com.lc.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,8 @@ import com.lc.model.YearAggregate;
 @RestController
 public class LendingClubController {
 
+    Logger logger = LoggerFactory.getLogger(LendingClubController.class);
+
     @Autowired
     LendingClubHandler lendingClubHandler;
 
@@ -24,7 +28,11 @@ public class LendingClubController {
     @ResponseBody
     public ArrayList<Integer> loadYears() {
 	try {
-	    return lendingClubHandler.fetchAllYears();
+	    logger.info("Calling handler");
+	    ArrayList<Integer> response = lendingClubHandler.fetchAllYears();
+	    logger.info("Recieved data from handler");
+	    logger.info("RESPONSE data :" + response);
+	    return response;
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
@@ -37,7 +45,11 @@ public class LendingClubController {
     public YearAggregate fetchData(@PathVariable int year) {
 
 	try {
-	    return lendingClubHandler.fetchDataForYear(year);
+	    logger.info("Calling handler");
+	    YearAggregate response = lendingClubHandler.fetchDataForYear(year);
+	    logger.info("Recieved data from handler");
+	    logger.info("RESPONSE data :" + response);
+	    return response;
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}

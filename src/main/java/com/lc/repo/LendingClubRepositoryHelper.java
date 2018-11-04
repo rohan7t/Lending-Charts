@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.lc.model.LoansByCreditGrade;
+import com.lc.model.MonthValue;
 import com.lc.model.MonthlyLoanVolume;
 
 public class LendingClubRepositoryHelper {
@@ -29,13 +30,13 @@ public class LendingClubRepositoryHelper {
     }
 
     public static MonthlyLoanVolume populateMonthlyLoanVolume(ResultSet rs) throws SQLException {
-	HashMap<Integer, BigDecimal> monthlyLoanVolumeMap = new HashMap<Integer, BigDecimal>();
+	ArrayList<MonthValue> monthlyLoanVolumeArray = new ArrayList<MonthValue>();
 	while (rs.next()) {
-	    Integer month = rs.getInt("month_no");
+	    String month = rs.getString("month_no");
 	    BigDecimal averageAmount = rs.getBigDecimal("loan_volume");
-	    monthlyLoanVolumeMap.put(month, averageAmount);
+	    monthlyLoanVolumeArray.add(new MonthValue(month, averageAmount));
 	}
-	return new MonthlyLoanVolume(monthlyLoanVolumeMap);
+	return new MonthlyLoanVolume(monthlyLoanVolumeArray);
     }
 
     public static ArrayList<Integer> populateAllYears(ResultSet rs) throws SQLException {

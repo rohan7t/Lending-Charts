@@ -1,26 +1,25 @@
 package com.lc.model;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class MonthlyLoanVolume {
-    private HashMap<Integer, BigDecimal> monthlyLoanVolumeMap;
+    private ArrayList<MonthValue> monthlyLoanVolumeArray;
 
-    public MonthlyLoanVolume(HashMap<Integer, BigDecimal> monthlyLoanVolumeMap) {
-	this.monthlyLoanVolumeMap = monthlyLoanVolumeMap;
+    public MonthlyLoanVolume(ArrayList<MonthValue> monthlyLoanVolumeArray) {
+	this.monthlyLoanVolumeArray = monthlyLoanVolumeArray;
     }
 
-    public HashMap<Integer, BigDecimal> getMonthlyLoanVolumeMap() {
-	return monthlyLoanVolumeMap;
+    public ArrayList<MonthValue> getMonthlyLoanVolumeArray() {
+	return monthlyLoanVolumeArray;
     }
 
-    public void setMonthlyLoanVolumeMap(HashMap<Integer, BigDecimal> monthlyLoanVolumeMap) {
-	this.monthlyLoanVolumeMap = monthlyLoanVolumeMap;
+    public void setMonthlyLoanVolumeArray(ArrayList<MonthValue> monthlyLoanVolumeArray) {
+	this.monthlyLoanVolumeArray = monthlyLoanVolumeArray;
     }
 
     @Override
     public String toString() {
-	return "MonthlyLoanVolume [monthlyLoanVolumeMap=" + monthlyLoanVolumeMap + "]";
+	return "MonthlyLoanVolume [monthlyLoanVolumeArray=" + monthlyLoanVolumeArray + "]";
     }
 
 }
