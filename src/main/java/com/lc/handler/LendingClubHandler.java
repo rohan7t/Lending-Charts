@@ -23,15 +23,19 @@ public class LendingClubHandler {
     LendingClubRepository lendingClubRepository;
 
     public ArrayList<Integer> fetchAllYears() throws SQLException {
+	LOGGER.info("Entering LendingClubHandler.fetchAllYears()");
 	ArrayList<Integer> years = lendingClubRepository.fetchAllYears();
+	LOGGER.info("Exiting LendingClubHandler.fetchAllYears()");
 	return years;
     }
 
     public YearAggregate fetchDataForYear(int year) throws SQLException {
+	LOGGER.info("Entering LendingClubHandler.fetchDataForYear()");
 	AggregatedTotals aggregatedTotals = fetchAggregatedTotals(year);
 	LoansByCreditGrade loansByCreditGrade = fetchLoansByCreditGrade(year);
 	MonthlyLoanVolume monthlyLoanVolume = fetchMonthlyLoanVolumes(year);
 	YearAggregate yearAggregate = new YearAggregate(year, aggregatedTotals, loansByCreditGrade, monthlyLoanVolume);
+	LOGGER.info("Exiting LendingClubHandler.fetchDataForYear()");
 	return yearAggregate;
     }
 

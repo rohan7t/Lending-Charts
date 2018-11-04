@@ -32,7 +32,7 @@ public class LendingClubRepository {
     private static final String FETCH_ALL_YEARS_SQL = "SELECT DISTINCT YEAR(STR_TO_DATE(CONCAT(l.`issue_d`, '-01'), '%b-%Y-%d')) AS year_value from loan l;";
 
     public AggregatedTotals fetchAggregatedTotals(int year) throws SQLException {
-	LOGGER.info(String.format("Entering LendingClubRepository fetchAggregatedTotals for %s", year));
+	LOGGER.info(String.format("Entering LendingClubRepository fetchAggregatedTotals() for %s", year));
 	Connection con = null;
 	PreparedStatement stmt = null;
 	ResultSet rs = null;
@@ -68,11 +68,13 @@ public class LendingClubRepository {
 		throw e;
 	    }
 	}
-
-	return new AggregatedTotals(amountApplied, amountFunded, amountCommitedByInvestors);
+	AggregatedTotals response = new AggregatedTotals(amountApplied, amountFunded, amountCommitedByInvestors);
+	LOGGER.info(String.format("Exiting LendingClubRepository fetchAggregatedTotals() with %s", response));
+	return response;
     }
 
     public LoansByCreditGrade fetchLoansByCreditGrade(int year) throws SQLException {
+	LOGGER.info(String.format("Entering LendingClubRepository fetchLoansByCreditGrade() for %s", year));
 	Connection con = null;
 	PreparedStatement stmt = null;
 	ResultSet rs = null;
@@ -102,10 +104,13 @@ public class LendingClubRepository {
 		throw e;
 	    }
 	}
+	LOGGER.info(
+		String.format("Exiting LendingClubRepository fetchLoansByCreditGrade() with %s", loansByCreditGrade));
 	return loansByCreditGrade;
     }
 
     public MonthlyLoanVolume fetchMonthlyLoanVolumes(int year) throws SQLException {
+	LOGGER.info(String.format("Entering LendingClubRepository fetchMonthlyLoanVolumes() for %s", year));
 	Connection con = null;
 	PreparedStatement stmt = null;
 	ResultSet rs = null;
@@ -135,10 +140,13 @@ public class LendingClubRepository {
 		throw e;
 	    }
 	}
+	LOGGER.info(
+		String.format("Exiting LendingClubRepository fetchMonthlyLoanVolumes() with %s", monthlyLoanVolume));
 	return monthlyLoanVolume;
     }
 
     public ArrayList<Integer> fetchAllYears() throws SQLException {
+	LOGGER.info("Entering LendingClubRepository fetchAllYears()");
 	Connection con = null;
 	Statement stmt = null;
 	ResultSet rs = null;
@@ -167,6 +175,7 @@ public class LendingClubRepository {
 		throw e;
 	    }
 	}
+	LOGGER.info(String.format("Exiting LendingClubRepository fetchAllYears() with %s", years));
 	return years;
     }
 
