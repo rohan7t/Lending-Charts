@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,18 +21,22 @@ public class LendingClubRepositoryHelper {
 
     public static LoansByCreditGrade populateLoansByCreditGrade(ResultSet rs) throws SQLException {
 	LOGGER.info("Entering LendingClubRepositoryHelper.populateLoansByCreditGrade()");
-	HashMap<String, HashMap<Integer, BigDecimal>> gradeMap = new HashMap<String, HashMap<Integer, BigDecimal>>();
+	HashMap<String, ArrayList<MonthValue>> gradeMap = new HashMap<String, ArrayList<MonthValue>>();
 	while (rs.next()) {
 	    String grade = rs.getString("grade");
-	    Integer month = rs.getInt("month_no");
+	    String month = rs.getString("month_no");
 	    BigDecimal averageAmount = rs.getBigDecimal("aver_amt");
 	    if (gradeMap.containsKey(grade)) {
-		gradeMap.get(grade).put(month, averageAmount);
+		gradeMap.get(grade).add(new MonthValue(month, averageAmount));
 	    } else {
-		HashMap<Integer, BigDecimal> innerMap = new HashMap<Integer, BigDecimal>();
-		innerMap.put(month, averageAmount);
-		gradeMap.put(grade, innerMap);
+		ArrayList<MonthValue> monthAverageValues = new ArrayList<MonthValue>();
+		monthAverageValues.add(new MonthValue(month, averageAmount));
+		gradeMap.put(grade, monthAverageValues);
 	    }
+	}
+
+	for (Entry<String, ArrayList<MonthValue>> entry : gradeMap.entrySet()) {
+	    Collections.sort(entry.getValue());
 	}
 	LOGGER.info("Exiting LendingClubRepositoryHelper.populateLoansByCreditGrade()");
 	return new LoansByCreditGrade(gradeMap);
@@ -44,6 +50,7 @@ public class LendingClubRepositoryHelper {
 	    BigDecimal averageAmount = rs.getBigDecimal("loan_volume");
 	    monthlyLoanVolumeArray.add(new MonthValue(month, averageAmount));
 	}
+	Collections.sort(monthlyLoanVolumeArray);
 	LOGGER.info("Exiting LendingClubRepositoryHelper.populateMonthlyLoanVolume()");
 	return new MonthlyLoanVolume(monthlyLoanVolumeArray);
     }

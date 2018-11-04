@@ -1,20 +1,20 @@
 package com.lc.model;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LoansByCreditGrade {
-    private HashMap<String, HashMap<Integer, BigDecimal>> gradeMap;
+    private HashMap<String, ArrayList<MonthValue>> gradeMap;
 
-    public LoansByCreditGrade(HashMap<String, HashMap<Integer, BigDecimal>> gradeMap) {
+    public LoansByCreditGrade(HashMap<String, ArrayList<MonthValue>> gradeMap) {
 	this.gradeMap = gradeMap;
     }
 
-    public HashMap<String, HashMap<Integer, BigDecimal>> getGradeMap() {
+    public HashMap<String, ArrayList<MonthValue>> getGradeMap() {
 	return gradeMap;
     }
 
-    public void setGradeMap(HashMap<String, HashMap<Integer, BigDecimal>> gradeMap) {
+    public void setGradeMap(HashMap<String, ArrayList<MonthValue>> gradeMap) {
 	this.gradeMap = gradeMap;
     }
 

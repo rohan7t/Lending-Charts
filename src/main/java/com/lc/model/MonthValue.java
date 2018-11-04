@@ -1,8 +1,12 @@
 package com.lc.model;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
-public class MonthValue {
+public class MonthValue implements Comparable<MonthValue> {
     private String month;
     private BigDecimal value;
 
@@ -60,6 +64,19 @@ public class MonthValue {
     @Override
     public String toString() {
 	return "MonthValue [month=" + month + ", value=" + value + "]";
+    }
+
+    @Override
+    public int compareTo(MonthValue o) {
+	try {
+	    Date thisDate = new SimpleDateFormat("MMM", Locale.ENGLISH).parse(this.getMonth());
+
+	    Date d2 = new SimpleDateFormat("MMM", Locale.ENGLISH).parse(o.getMonth());
+	    return thisDate.compareTo(d2);
+	} catch (ParseException e) {
+	    e.printStackTrace();
+	    return 0;
+	}
     }
 
 }
