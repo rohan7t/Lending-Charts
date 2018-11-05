@@ -6,7 +6,7 @@ function loadYear(){
     var str="";
     var arr=[];
     $.ajax({
-        url: 'http://localhost:5000/loadYears',
+        url: 'http://172.31.80.242:5000/loadYears',
         type: 'GET',
         crossDomain: true,
         dataType: 'json',
@@ -40,7 +40,7 @@ function fetchReport(){
     var str2="";
     var str3="";
     $.ajax({
-        url: 'http://localhost:5000/fetchData/'+year,
+        url: 'http://172.31.80.242:5000/fetchData/'+year,
         type: 'GET',
         crossDomain: true,
         dataType: 'json',
