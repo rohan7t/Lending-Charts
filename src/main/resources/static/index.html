@@ -1,9 +1,88 @@
 <html>
-<body>
+    <head>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script  type="text/javascript" src="d3.min.js"></script>
+            <script src="mainScript.js"></script>
+            <link rel="stylesheet" href="style.css">
+        <script>
+         
+        </script>
+    </head>
+    <body>
+        <div class="container mainDiv">
+            <div class="row">
+                <div class="col-md-6">
+                        <div class="form-group">
+                                <label for="exampleFormControlSelect2">Select your Year</label>
+                                <select class="form-control" id="YearAppend">
+                                       
+                                      </select>
+                             </div>
+                </div>
+                <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary" onClick="fetchReport();">Submit</button>
+                </div>
+            </div>
+            <div id="NumbersDiv" class="row">
+               
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div><span>Total Amount Applied for</span></div>
+                         </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="totalAmount"></div>
+                         </div>
+                    </div>
+                </div>
+               
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                                <div><span>Total Amount Funded</span></div>
+                         </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="AmountFunded"></div>
+                         </div>
+                    </div>
+                </div>
+               
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                                <div><span>Total Committed by Investors</span></div>
+                         </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="TotalInvestors"></div>
+                         </div>
+                    </div>
+                </div>
+            </div>
 
-<h1>My First Heading</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="lineChart">
+                        
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <div id="chart"></div>
+                    </div>
+                </div>
+            </div>
 
-<p>My first paragraph.</p>
-
-</body>
+        </div>
+    </body>
 </html>
