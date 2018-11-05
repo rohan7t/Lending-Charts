@@ -6,9 +6,8 @@ function loadYear(){
     var str="";
     var arr=[];
     $.ajax({
-        url: 'http://172.31.80.242:5000/loadYears',
+        url: 'http://ec2-54-234-17-234.compute-1.amazonaws.com:5000/loadYears',
         type: 'GET',
-        crossDomain: true,
         dataType: 'json',
         data:{
             format:"json"
@@ -40,9 +39,8 @@ function fetchReport(){
     var str2="";
     var str3="";
     $.ajax({
-        url: 'http://172.31.80.242:5000/fetchData/'+year,
+        url: 'http://ec2-54-234-17-234.compute-1.amazonaws.com:5000/fetchData/'+year,
         type: 'GET',
-        crossDomain: true,
         dataType: 'json',
         data:{
             format:"json"
@@ -218,7 +216,7 @@ function plot(params){
 		.attr("y", 0)
 		.style("text-anchor", "middle")
 		.attr("transform", "translate(-50," + height/2 + ") rotate(-90)")
-		.text("Units sold");
+		.text("Loan Volume");
 
 	this.select(".x.axis")
 		.append("text")
@@ -226,7 +224,7 @@ function plot(params){
 		.attr("y", 0)
 		.style("text-anchor", "middle")
 		.attr("transform", "translate(" + width/2 + ",80)")
-		.text("Donut type");
+		.text("Month");
 }
 
 
